@@ -4,9 +4,9 @@ version = "1.0.0"
 authors = []
 
 [addresses]
-whistle_protect = "0xAFB"
+whistle_protect = "_"
 billboard = "0xBB"
-
+verifier = "0x40c7dd4b7a489e74eaefcb6fc04675025cd3820658e7f89135523f4a60471495"
 
 [dev-addresses]
 
