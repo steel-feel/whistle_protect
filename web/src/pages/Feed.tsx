@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import ky from 'ky';
+import { moduleAddress, aptos } from "@/lib/constants";
 
 interface Tip {
   id: string;
@@ -16,7 +17,7 @@ interface Tip {
   content: string;
   category: string;
   attestations: number;
-  domain : string
+  domain: string
 }
 
 const Feed = () => {
@@ -49,16 +50,59 @@ const Feed = () => {
   // const gateway = import.meta.env.PUBLIC_GATEWAY;
 
   const getFeedFromGateway = async () => {
-  
-  //TODO
-    return []
+
+    //get the number of entries
+    const payload = {
+      function: `${moduleAddress}::smart_table::get_messages_len`,
+      typeArguments: [], // No type arguments for this function
+      functionArguments: [], // The address to check the balance of
+    };
+
+    const result = await aptos.view({
+      //@ts-ignore
+      payload,
+    });
+    // console.log({ result });
+
+    //@ts-ignore
+    const len = parseInt(result[0]);
+    let p2, r2, pData;
+    let feeds = []
+    for (let i = 1; i <= len; i++) {
+      p2 = {
+        function: `${moduleAddress}::smart_table::get_message`,
+        typeArguments: [], // No type arguments for this function
+        functionArguments: [i], // The address to check the balance of
+      };
+      try {
+        r2 = await aptos.view({
+          //@ts-ignore
+          payload: p2,
+        });
+        console.log({ r2 });
+
+        pData = JSON.parse(r2[0])
+        if(pData.date == undefined) {
+          continue
+        }
+        pData.id = "" + i
+        pData.date = new Date(pData.date)
+
+        feeds.push(pData)
+      } catch (err) {
+        console.error(err)
+      }
+
+    }
+
+    return feeds
   }
 
   const loadInitialData = async () => {
     setIsLoading(true);
     try {
       console.log('Loading initial data...');
-      const initialTips = await getFeedFromGateway() || [];
+      const initialTips = await getFeedFromGateway();
       console.log('Setting initial tips:', initialTips);
       setTips(initialTips);
 
@@ -138,7 +182,7 @@ const Feed = () => {
             </div>
             <span className="text-xl font-semibold tracking-tight">Whistle Protect</span>
           </Link>
-         
+
         </div>
       </header>
 
@@ -226,9 +270,9 @@ const Feed = () => {
                           </Button>
                         </div>
                       </div> */}
-                     
+
                       <div>
-                      <CardTitle className="text-white text-lg font-semibold">{tip.title}</CardTitle>
+                        <CardTitle className="text-white text-lg font-semibold">{tip.title}</CardTitle>
                       </div>
                       <p className="text-gray-300 leading-relaxed text-md">{tip.content}</p>
                       <div className="flex items-center justify-between pt-4 border-t border-gray-800">
