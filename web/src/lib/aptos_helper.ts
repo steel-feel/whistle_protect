@@ -1,8 +1,8 @@
 import { Account, Ed25519PrivateKey } from "@aptos-labs/ts-sdk";
 import { aptos, moduleAddress } from "./constants";
 
-const alicePvtKey = new Ed25519PrivateKey("ed25519-priv-0xe1b9dd5095acb6fd2a74c34300616fb1929afcd5d95bc2f3bbb22fd0af9389b5");
-const verifierPrivateKey = new Ed25519PrivateKey("ed25519-priv-0x90d8602e09249b77daceea75bcdfe557a98f03548ef23fd1999bcff3044de16e");
+const alicePvtKey = new Ed25519PrivateKey(import.meta.env.PUBLIC_ALICE_PVT_KEY); 
+const verifierPrivateKey = new Ed25519PrivateKey( import.meta.env.PUBLIC_VERIFIER_PVT_KEY );
 
 const verifier = Account.fromPrivateKey({ privateKey: verifierPrivateKey })
 const alice = Account.fromPrivateKey({ privateKey: alicePvtKey });
