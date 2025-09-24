@@ -5,6 +5,9 @@ authors = []
 
 [addresses]
 whistle_protect = "0xAFB"
+billboard = "0xBB"
+
+
 [dev-addresses]
 
 [dependencies.AptosFramework]
