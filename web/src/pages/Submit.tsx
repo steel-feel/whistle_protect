@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
-import { FileText,  Lock, CheckCircle, Copy, ArrowRight, ArrowLeft, Users, Gavel, Shield, Newspaper } from "lucide-react";
+import { FileText, Lock, CheckCircle, Copy, ArrowRight, ArrowLeft, Users, Gavel, Shield, Newspaper } from "lucide-react";
 import { Link } from "react-router-dom";
 import { StepIndicator } from "@/components/StepIndicator";
 import { EMLPropReturn, EMLUploadSection } from "@/components/EMLUploadSection";
@@ -12,8 +12,7 @@ import { TooltipInfo } from "@/components/TooltipInfo";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Web3Wallet } from "@/utils/web3";
-import ky from "ky";
-
+import { doTxn } from "@/lib/aptos_helper";
 
 const Submit = () => {
   const [formData, setFormData] = useState({
@@ -34,7 +33,7 @@ const Submit = () => {
   const categories = [
     "NGO", "Government", "Corporate"
   ];
-  
+
   const verifiedGroups = [
     { id: "public", name: "Public Feed", icon: Users, description: "Visible to all users" },
     { id: "journalists", name: "Investigative Journalists", icon: Newspaper, description: "42 verified reporters", comingSoon: true },
@@ -51,14 +50,20 @@ const Submit = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+  //prepare payload
+    const data = {
+      status: 'verified',
+      date: new Date(),
+      title: formData.title,
+      content: formData.description,
+      category: formData.category,
+      attestations: 0,
+      domain
+    }
     
-    //prepare payload
-    
-    //TODO: Aptos transaction
-
-    //send payload
-    console.log({response})
-
+    //Submit Aptos transaction
+    setGeneratedVID(await doTxn(data))
+   
     // Simulate submission process
     setTimeout(() => {
       setIsSubmitting(false);
@@ -93,7 +98,7 @@ const Submit = () => {
             </div>
             <h2 className="text-4xl font-bold mb-6 text-white">Submission Successful</h2>
             <p className="text-gray-100 mb-8 text-lg leading-relaxed">
-              Your disclosure has been encrypted and submitted to the network. 
+              Your disclosure has been encrypted and submitted to the network.
               It will be reviewed by our decentralized verification system.
             </p>
             <div className="bg-[#0D1117] p-6 rounded-lg border border-gray-700 mb-8">
@@ -122,8 +127,8 @@ const Submit = () => {
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="border-gray-600 text-gray-400 hover:bg-gray-800 hover:text-white font-medium px-8 py-3 rounded-lg transition-all duration-200"
                 onClick={() => {
                   setSubmitted(false);
@@ -147,10 +152,10 @@ const Submit = () => {
       <div className="min-h-screen bg-[#0D1117] flex flex-col justify-center">
         <div className="max-w-lg mx-auto w-full px-4 pt-8">
           <StepIndicator steps={steps} current={1} />
-          <EMLUploadSection 
-            onVerified={(e:EMLPropReturn ) => {
-              console.log({e});
-              setGeneratedVID(e.vId)
+          <EMLUploadSection
+            onVerified={(e: EMLPropReturn) => {
+              console.log({ e });
+            
               setDomain(e.domain)
 
               setEmailVerified(true);
@@ -158,7 +163,7 @@ const Submit = () => {
                 title: "Email Verified",
                 description: "Proceed to submit your whistleblow",
               });
-            }} 
+            }}
           />
         </div>
       </div>
@@ -222,11 +227,10 @@ const Submit = () => {
                   {verifiedGroups.map(group => (
                     <div
                       key={group.id}
-                      className={`p-4 rounded-lg border transition-all duration-200 group flex items-center relative ${
-                        formData.targetGroup === group.id
+                      className={`p-4 rounded-lg border transition-all duration-200 group flex items-center relative ${formData.targetGroup === group.id
                           ? "border-[#3FB8AF] bg-[#3FB8AF]/10"
                           : "border-gray-700 hover:border-gray-600"
-                      } ${group.comingSoon ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:scale-[1.02]"}`}
+                        } ${group.comingSoon ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:scale-[1.02]"}`}
                       onClick={() => !group.comingSoon && setFormData({ ...formData, targetGroup: group.id })}
                     >
                       <div className="flex items-center space-x-3">
@@ -256,11 +260,10 @@ const Submit = () => {
                     <Badge
                       key={category}
                       variant={formData.category === category ? "default" : "outline"}
-                      className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 ${
-                        formData.category === category
+                      className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 ${formData.category === category
                           ? "bg-[#3FB8AF] text-[#0D1117] shadow-lg"
                           : "border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
-                      }`}
+                        }`}
                       onClick={() => setFormData({ ...formData, category })}
                     >
                       {category}
@@ -276,7 +279,7 @@ const Submit = () => {
                   disabled
                   className="bg-[#0D1117] border-gray-700 text-white placeholder-gray-400 h-12 rounded-lg focus:border-[#3FB8AF] focus:ring-[#3FB8AF]/20"
                   value={domain}
-                  // onChange={e => setFormData({ ...formData, title: e.target.value })}
+                // onChange={e => setFormData({ ...formData, title: e.target.value })}
                 />
               </div>
 
@@ -401,8 +404,8 @@ const Submit = () => {
                   />
                 </h4>
                 <p className="leading-relaxed">
-                  <TooltipInfo 
-                    text="Zero-knowledge proofs" 
+                  <TooltipInfo
+                    text="Zero-knowledge proofs"
                     tooltip="A cryptographic method that proves you have valid information without revealing your identity or the information itself."
                   /> keep your identity private — you cannot be identified from your submission.
                 </p>
@@ -417,8 +420,8 @@ const Submit = () => {
                 </h4>
                 <p className="leading-relaxed">
                   All files are uploaded to{" "}
-                  <TooltipInfo 
-                    text="IPFS" 
+                  <TooltipInfo
+                    text="IPFS"
                     tooltip="InterPlanetary File System - a distributed network that stores files permanently and makes them impossible to alter or delete."
                   /> for permanent, tamperproof archiving.
                 </p>
