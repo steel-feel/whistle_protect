@@ -51,7 +51,7 @@ aptos move publish --named-addresses whistle_protect=default
  ```
 
  3. Run webapp
-
+> set PUBLIC_VERIFIER_PVT_KEY = "0x .. . " at enviorment
 ```bash
 cd web && pnpm i && pnpm run dev
 ```
