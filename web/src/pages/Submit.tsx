@@ -11,10 +11,20 @@ import { EMLPropReturn, EMLUploadSection } from "@/components/EMLUploadSection";
 import { TooltipInfo } from "@/components/TooltipInfo";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { Web3Wallet } from "@/utils/web3";
-import { doTxn } from "@/lib/aptos_helper";
+import { doTx, makeTxn } from "@/lib/aptos_helper";
+import { useWallet } from "@aptos-labs/wallet-adapter-react";
+import { set } from "react-hook-form";
 
 const Submit = () => {
+  const { 
+    connect,
+    disconnect,
+    account,
+    connected,
+    wallet,
+    isLoading,
+    signTransaction
+  } = useWallet();
   const [formData, setFormData] = useState({
     category: '',
     title: '',
@@ -28,8 +38,6 @@ const Submit = () => {
   const [domain, setDomain] = useState('')
   const [emailVerified, setEmailVerified] = useState(false);
   const { toast } = useToast();
-  const wallet = Web3Wallet.getInstance();
-
   const categories = [
     "NGO", "Government", "Corporate"
   ];
@@ -42,12 +50,15 @@ const Submit = () => {
   ];
 
   const steps = [
+    { label: "Connect Wallet" },
     { label: "Verify Email" },
     { label: "Submit Whistleblow" }
   ];
-  let currentStep = 0;
+  
+  const currentStep = !connected ? 0 : !emailVerified ? 1 : 2;
 
   const handleSubmit = async (e: React.FormEvent) => {
+    try{
     e.preventDefault();
     setIsSubmitting(true);
   //prepare payload
@@ -58,17 +69,31 @@ const Submit = () => {
       content: formData.description,
       category: formData.category,
       attestations: 0,
-      domain
+      domain,
+      submitter: account?.address
     }
-    
+
+    const tx = await makeTxn(data, account.address);
+    const aliceSenderAuthenticator = signTransaction({
+        transactionOrPayload : tx
+    });
+
+    const vId = await doTx(aliceSenderAuthenticator,tx);
+
     //Submit Aptos transaction
-    setGeneratedVID(await doTxn(data))
+    setGeneratedVID(vId)
    
     // Simulate submission process
     setTimeout(() => {
       setIsSubmitting(false);
       setSubmitted(true);
     }, 3000);
+
+  }catch(err) {
+    setIsSubmitting(false)
+    setSubmitted(false);
+  }
+
   };
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,6 +171,34 @@ const Submit = () => {
     );
   }
 
+
+  if (!connected) {
+    return (
+      <div className="min-h-screen bg-[#0D1117] flex flex-col justify-center">
+        <div className="max-w-lg mx-auto w-full px-4 pt-8">
+          <StepIndicator steps={steps} current={0} />
+          <Card className="bg-[#161B22] border-gray-700 mt-8">
+            <CardContent className="p-12 text-center">
+              <div className="p-4 bg-[#3FB8AF]/10 rounded-full w-fit mx-auto mb-8">
+                <FileText className="h-16 w-16 text-[#3FB8AF]" />
+              </div>
+              <h2 className="text-2xl font-bold mb-6 text-white">Connect Your Wallet</h2>
+              <p className="text-gray-400 mb-8">
+                To submit a whistleblow, you need to connect your Petra wallet first. This ensures your submission is securely recorded on the Aptos blockchain.
+              </p>
+              <Button
+                onClick={() => connect("Petra")}
+                disabled={isLoading}
+                className="bg-[#3FB8AF] hover:bg-[#2FA39E] text-[#0D1117] font-medium px-8 py-3 rounded-lg transition-all duration-200"
+              >
+                {isLoading ? "Connecting..." : "Connect Petra Wallet"}
+              </Button>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
 
   if (!emailVerified) {
     return (

@@ -7,9 +7,9 @@ const verifierPrivateKey = new Ed25519PrivateKey( import.meta.env.PUBLIC_VERIFIE
 const verifier = Account.fromPrivateKey({ privateKey: verifierPrivateKey })
 const alice = Account.fromPrivateKey({ privateKey: alicePvtKey });
 
-export async function doTxn(data) {
 
-    const payload = {
+export async function makeTxn(data, accountAddr) {
+     const payload = {
       function: `${moduleAddress}::smart_table::get_messages_len`,
       typeArguments: [], // No type arguments for this function
       functionArguments: [], // The address to check the balance of
@@ -25,8 +25,8 @@ export async function doTxn(data) {
 
     const sno = len+1;
 
-    const transaction2 = await aptos.transaction.build.multiAgent({
-        sender: alice.accountAddress,
+    const transaction = await aptos.transaction.build.multiAgent({
+        sender: accountAddr,
         secondarySignerAddresses: [verifier.accountAddress],
         withFeePayer: true,
         data: {
@@ -37,26 +37,25 @@ export async function doTxn(data) {
         },
     });
 
+    return transaction
+}
 
-    const aliceSenderAuthenticator = aptos.transaction.sign({
-        signer: alice,
-        transaction: transaction2,
-    });
-    // Bob is a secondary signer for this transaction
+export async function doTx(aliceSenderAuthenticator:any,  transaction : any) {
+     // Bob is a secondary signer for this transaction
     const verifierSenderAuthenticator = aptos.transaction.sign({
         signer: verifier,
-        transaction: transaction2,
+        transaction: transaction,
     });
 
     //fee payer
     const feePayerAuthenticator = aptos.transaction.signAsFeePayer({
         signer: verifier,
-        transaction: transaction2,
+        transaction: transaction,
     });
 
     const committedTransaction = await aptos.transaction.submit.multiAgent({
-        transaction: transaction2,
-        senderAuthenticator: aliceSenderAuthenticator,
+        transaction: transaction,
+        senderAuthenticator: (await aliceSenderAuthenticator).authenticator,
         additionalSignersAuthenticators: [verifierSenderAuthenticator],
         feePayerAuthenticator
     });
