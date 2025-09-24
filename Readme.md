@@ -50,5 +50,10 @@ aptos init
 aptos move publish --named-addresses whistle_protect=default
  ```
 
+ 3. Run webapp
+
+```bash
+cd web && pnpm i && pnpm run dev
+```
 
 
