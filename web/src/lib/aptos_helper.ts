@@ -66,5 +66,5 @@ export async function doTxn(data) {
     });
 
     console.log("Txn done");
-    return sno + ""
+    return executedTransaction.hash
 }
