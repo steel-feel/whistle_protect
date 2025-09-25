@@ -60,14 +60,13 @@ const Index = () => {
       {/* Hero Section */}
   <section className="container mx-auto px-6 py-10 text-center">
         <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
-          A Safer Way to{" "}
+         Truly Secure and Anonymous {" "}
           <span className="text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-            Whistleblow
+            Whistleblowing
           </span>
         </h1>
         <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-          A secure platform for verifiable disclosures. No logins. No surveillance. Just proof.
-        </p>
+A secure platform for verifiable disclosure. There are no gas. No surveillance. Just proof.        </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
           <Button 
@@ -76,7 +75,7 @@ const Index = () => {
             asChild
           >
             <Link to="/submit" className="flex items-center space-x-2">
-              <span>Submit a Whistleblow</span>
+              <span>Submit an Entry</span>
               <ArrowRight className="h-5 w-5" />
             </Link>
           </Button>
