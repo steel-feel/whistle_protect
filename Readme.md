@@ -1,5 +1,7 @@
 # Whistle Protect
 
+![Whistle Protect](./assets/home.png)
+
 - Track: [3 - Consumer and Others]
 - Team No. - 54
 - Team name. - stack_too_deep
