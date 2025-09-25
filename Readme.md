@@ -32,6 +32,15 @@ Using zero-knowledge email proofs, we verify source legitimacy (e.g., domain or 
 - *web* : Frontend Web app
 - *souces* : Aptos contracts
 
+## Techincal details
+We have used Noir contracts with ZKEmail library to prove the association of the whistleblower to the organisation. The valid .eml file should generate the proof (It takes time around 14 sec, depend upon system generate), which is then submitted verifier for proof verification. 
+
+After the proof has been successfully verified by verifier, The claim details of leak is taken from user and transaction is submitted on Aptos chain (Devnet) by utilizing 
+- *Mulit-Agent Transaction* - The transaction details are only submitted if and only if verifier allows
+- *Fees Sponsorship* - We expect user would be willing to abstract their identity as highly as possible. hence, they will be using stealth wallet with no prior funds. To endorse the goodwill of whistleblower transaction are truly gas less, mean user does not need funds in wallet to make an entry
+
+
+
 ## Usage 
 
 > Required , aptos cli and pnpm 
