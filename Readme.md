@@ -4,6 +4,9 @@
 - Team No. - 54
 - Team name. - stack_too_deep
 
+- [PPT](https://docs.google.com/presentation/d/1hYLo6Jg1IDdvzM5RSCeRwlUGgOP8kvVBDWbvF8oChlE/edit?usp=sharing)
+
+- [Demo](https://youtu.be/Uds2chmb9Dk) 
 
 ## Description
 

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const Manifesto = () => {
   return (
-    <div className="min-h-screen bg-gray-900 text-gray-100 font-['Inter',sans-serif]">
+  <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif]">
       <div className="max-w-3xl mx-auto px-6 py-16">
         {/* Back to Home Link */}
         <div className="mb-16">
           <Link 
             to="/" 
-            className="text-gray-400 hover:text-gray-100 transition-colors duration-200 font-medium"
+            className="text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
           >
             Back to Home
           </Link>
@@ -17,7 +17,7 @@ const Manifesto = () => {
 
         {/* Main Content */}
         <div className="space-y-6">
-          <h1 className="text-5xl md:text-6xl font-bold leading-tight">
+          <h1 className="text-5xl md:text-6xl font-bold leading-tight text-foreground">
             Truth Without Trust
           </h1>
 
@@ -42,7 +42,7 @@ const Manifesto = () => {
               The gatekeepers built walls around truth. We built cryptographic tunnels through them.
             </p>
 
-            <p className="text-lg font-semibold text-[#3FB8AF] mt-12">
+            <p className="text-lg font-semibold text-primary mt-12">
               Speak truth. Stay protected. Choose freely.
             </p>
           </div>

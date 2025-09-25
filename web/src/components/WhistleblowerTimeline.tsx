@@ -85,7 +85,7 @@ export const WhistleblowerTimeline = () => {
       {/* Interactive Timeline */}
       <div className="relative">
         {/* Timeline line */}
-        <div className="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-gray-800 via-[#3FB8AF]/50 to-gray-800"></div>
+  <div className="absolute top-8 left-0 right-0 h-0.5 bg-gradient-to-r from-muted via-primary/50 to-muted"></div>
         
         <div className="flex justify-between items-start relative">
           {timelineEvents.map((event, index) => (
@@ -100,10 +100,10 @@ export const WhistleblowerTimeline = () => {
                 <div 
                   className={`w-16 h-16 rounded-full border-4 flex items-center justify-center font-bold text-sm transition-all duration-300 transform ${
                     selectedEvent?.year === event.year
-                      ? 'border-[#3FB8AF] bg-[#3FB8AF] text-[#0D1117] scale-110 shadow-lg shadow-[#3FB8AF]/25'
+                      ? 'border-primary bg-primary text-background scale-110 shadow-lg shadow-primary/25'
                       : hoveredEvent === event.year
-                      ? 'border-[#3FB8AF]/70 bg-[#161B22] text-white scale-105'
-                      : 'border-gray-600 bg-[#161B22] text-gray-300 hover:border-[#3FB8AF]/50 hover:scale-105'
+                      ? 'border-primary/70 bg-card text-foreground scale-105'
+                      : 'border-border bg-card text-muted-foreground hover:border-primary/50 hover:scale-105'
                   }`}
                 >
                   {event.year}
@@ -111,8 +111,8 @@ export const WhistleblowerTimeline = () => {
                 <div className="mt-4 text-center max-w-32 transition-all duration-300">
                   <p className={`text-sm font-medium transition-colors duration-300 ${
                     selectedEvent?.year === event.year || hoveredEvent === event.year
-                      ? 'text-[#3FB8AF]'
-                      : 'text-gray-400'
+                      ? 'text-primary'
+                      : 'text-muted-foreground'
                   }`}>
                     {event.title}
                   </p>
@@ -125,23 +125,23 @@ export const WhistleblowerTimeline = () => {
 
       {/* Event Details */}
       {selectedEvent && (
-        <Card className="bg-[#161B22] border-gray-700 hover:border-[#3FB8AF]/50 transition-all duration-300 animate-fade-in">
+        <Card className="bg-card border-border hover:border-primary/50 transition-all duration-300 animate-fade-in">
           <CardContent className="p-8">
             <div className="flex flex-col lg:flex-row justify-between items-start mb-6">
               <div className="flex-1">
                 <div className="flex items-center space-x-3 mb-3">
-                  <h3 className="text-3xl font-bold text-white">
+                  <h3 className="text-3xl font-bold text-foreground">
                     {selectedEvent.title}
                   </h3>
                   <Badge 
                     variant="outline" 
-                    className={`border-[#3FB8AF] ${getStatusColor(selectedEvent.status)} flex items-center space-x-1 px-3 py-1`}
+                    className={`border-primary ${getStatusColor(selectedEvent.status)} flex items-center space-x-1 px-3 py-1`}
                   >
                     {getStatusIcon(selectedEvent.status)}
                     <span>{selectedEvent.year}</span>
                   </Badge>
                 </div>
-                <p className="text-gray-300 mb-6 text-lg leading-relaxed">
+                <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
                   {selectedEvent.description}
                 </p>
               </div>
@@ -149,26 +149,26 @@ export const WhistleblowerTimeline = () => {
             
             <div className="grid lg:grid-cols-2 gap-8">
               <div className="space-y-3">
-                <h4 className="font-semibold text-red-400 flex items-center space-x-2 text-lg">
+                <h4 className="font-semibold text-destructive flex items-center space-x-2 text-lg">
                   <AlertTriangle className="h-5 w-5" />
                   <span>Consequences</span>
                 </h4>
-                <p className="text-gray-400 leading-relaxed pl-7">{selectedEvent.outcome}</p>
+                <p className="text-muted-foreground leading-relaxed pl-7">{selectedEvent.outcome}</p>
               </div>
               <div className="space-y-3">
-                <h4 className="font-semibold text-green-400 flex items-center space-x-2 text-lg">
+                <h4 className="font-semibold text-green-700 flex items-center space-x-2 text-lg">
                   <CheckCircle className="h-5 w-5" />
                   <span>Impact</span>
                 </h4>
-                <p className="text-gray-400 leading-relaxed pl-7">{selectedEvent.impact}</p>
+                <p className="text-muted-foreground leading-relaxed pl-7">{selectedEvent.impact}</p>
               </div>
             </div>
 
             {selectedEvent.learnMoreUrl && (
-              <div className="mt-8 pt-6 border-t border-gray-700">
+              <div className="mt-8 pt-6 border-t border-border">
                 <Button 
                   variant="outline" 
-                  className="border-[#3FB8AF] text-[#3FB8AF] hover:bg-[#3FB8AF] hover:text-[#0D1117] transition-all duration-200"
+                  className="border-primary text-primary hover:bg-primary hover:text-background transition-all duration-200"
                   asChild
                 >
                   <a href={selectedEvent.learnMoreUrl} target="_blank" rel="noopener noreferrer" className="flex items-center space-x-2">
@@ -183,10 +183,10 @@ export const WhistleblowerTimeline = () => {
       )}
 
       {!selectedEvent && (
-        <Card className="bg-[#161B22] border-gray-700 border-dashed">
+        <Card className="bg-card border-border border-dashed">
           <CardContent className="p-12 text-center">
-            <Clock className="h-12 w-12 text-gray-500 mx-auto mb-4" />
-            <p className="text-gray-500 text-lg">
+            <Clock className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <p className="text-muted-foreground text-lg">
               Click on any event above to explore its story and impact
             </p>
           </CardContent>

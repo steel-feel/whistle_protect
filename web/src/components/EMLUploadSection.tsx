@@ -93,13 +93,13 @@ export const EMLUploadSection: React.FC<EMLUploadSectionProps> = ({ onVerified }
   };
 
   return (
-    <div className="min-h-screen bg-[#0D1117] flex flex-col overflow-visible">
+  <div className="min-h-screen bg-background flex flex-col overflow-visible">
       {/* Top Navigation Bar */}
-      <div className="w-full px-6 py-4 border-b border-gray-800">
+  <div className="w-full px-6 py-4 border-b border-border bg-card">
         <Link to="/" className="inline-block">
           <Button
             variant="outline"
-            className="bg-gray-200 text-gray-900 border-gray-300 hover:bg-gray-300 hover:text-gray-800 font-medium px-4 py-2 rounded-md transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-2"
+            className="bg-secondary text-foreground border-border hover:bg-muted hover:text-foreground font-medium px-4 py-2 rounded-md transition-all duration-200 shadow-sm hover:shadow-md flex items-center gap-2"
           >
             <ArrowLeft className="h-4 w-4" />
             Exit to Home
@@ -109,10 +109,10 @@ export const EMLUploadSection: React.FC<EMLUploadSectionProps> = ({ onVerified }
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col justify-center overflow-visible">
-        <div className="max-w-lg mx-auto w-full px-4 overflow-visible">
+  <div className="max-w-lg mx-auto w-full px-4 overflow-visible">
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-bold text-white mb-3">Verify Your Email</h2>
-            <div className="text-gray-200 text-base leading-relaxed max-w-lg mx-auto overflow-visible">
+            <h2 className="text-3xl font-bold text-foreground mb-3">Verify Your Email</h2>
+            <div className="text-muted-foreground text-base leading-relaxed max-w-lg mx-auto overflow-visible">
               To verify your identity, upload the original{" "}
               <TooltipInfo
                 text=".eml file"
@@ -123,9 +123,9 @@ export const EMLUploadSection: React.FC<EMLUploadSectionProps> = ({ onVerified }
           </div>
 
           <div
-            className={`bg-[#161B22] border-2 border-dashed rounded-xl p-8 flex flex-col items-center
+            className={`bg-card border-2 border-dashed rounded-xl p-8 flex flex-col items-center
               transition-all duration-300 cursor-pointer group
-              ${verified ? "border-green-400 bg-green-400/5" : "border-[#3FB8AF] hover:bg-[#1C232A] hover:border-[#2FA39E] hover:scale-[1.02]"}`}
+              ${verified ? "border-green-400 bg-green-400/5" : "border-accent hover:bg-muted hover:border-primary hover:scale-[1.02]"}`}
             onClick={() => !verified && inputRef.current?.click()}
             onDrop={handleDrop}
             onDragOver={e => e.preventDefault()}
@@ -136,15 +136,15 @@ export const EMLUploadSection: React.FC<EMLUploadSectionProps> = ({ onVerified }
             {verified ? (
               <CheckCircle className="text-green-400 h-12 w-12 mb-4 animate-bounce" />
             ) : (
-              <Upload className={`h-12 w-12 mb-4 transition-colors duration-200 ${verifying ? "text-yellow-400 animate-pulse" : "text-[#3FB8AF] group-hover:text-[#2FA39E]"}`} />
+              <Upload className={`h-12 w-12 mb-4 transition-colors duration-200 ${verifying ? "text-yellow-400 animate-pulse" : "text-primary group-hover:text-primary"}`} />
             )}
 
-            <div className={`font-medium text-xl mb-3 ${verified ? "text-green-400" : "text-white"}`}>
+            <div className={`font-medium text-xl mb-3 ${verified ? "text-green-400" : "text-foreground"}`}>
               {verified ? "Email Verified!" : verifying ? "Verifying..." : "Upload EML File"}
             </div>
 
             {!verified && (
-              <p className="text-gray-300 mb-6 text-sm max-w-sm text-center leading-relaxed">
+              <p className="text-muted-foreground mb-6 text-sm max-w-sm text-center leading-relaxed">
                 Drag and drop your <strong>.eml</strong> file here or click to browse.
                 This step confirms your leak is authentic while keeping you anonymous.
               </p>
@@ -184,7 +184,7 @@ export const EMLUploadSection: React.FC<EMLUploadSectionProps> = ({ onVerified }
                   e.stopPropagation();
                   inputRef.current?.click();
                 }}
-                className="px-6 py-3 bg-[#3FB8AF] text-[#0D1117] hover:bg-[#2FA39E] hover:scale-105 rounded-lg text-base font-semibold transition-all duration-200 shadow-lg"
+                className="px-6 py-3 bg-primary text-background hover:bg-primary/80 hover:scale-105 rounded-lg text-base font-semibold transition-all duration-200 shadow-lg"
                 disabled={verifying}
               >
                 {verifying ? "Verifying..." : "Choose File"}

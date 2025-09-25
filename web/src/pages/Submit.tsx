@@ -115,46 +115,46 @@ const Submit = () => {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-[#0D1117] text-white font-['Inter',sans-serif] flex items-center justify-center p-6">
-        <Card className="bg-[#161B22] border-gray-700 max-w-2xl w-full">
+      <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif] flex items-center justify-center p-6">
+        <Card className="bg-card border-border max-w-2xl w-full">
           <CardContent className="p-12 text-center">
-            <div className="p-4 bg-green-500/10 rounded-full w-fit mx-auto mb-8">
-              <CheckCircle className="h-16 w-16 text-green-400" />
+            <div className="p-4 bg-green-100/30 rounded-full w-fit mx-auto mb-8">
+              <CheckCircle className="h-16 w-16 text-green-600" />
             </div>
-            <h2 className="text-4xl font-bold mb-6 text-white">Submission Successful</h2>
-            <p className="text-gray-100 mb-8 text-lg leading-relaxed">
+            <h2 className="text-4xl font-bold mb-6 text-foreground">Submission Successful</h2>
+            <p className="text-muted-foreground mb-8 text-lg leading-relaxed">
               Your disclosure has been encrypted and submitted to the network.
               It will be reviewed by our decentralized verification system.
             </p>
-            <div className="bg-[#0D1117] p-6 rounded-lg border border-gray-700 mb-8">
+            <div className="bg-background p-6 rounded-lg border border-border mb-8">
               <div className="flex items-center justify-between">
                 <div className="text-left">
-                  <p className="text-sm text-gray-400 mb-1">Your VID:</p>
-                  <p className="font-mono text-[#3FB8AF] text-lg break-all">{generatedVID}</p>
+                  <p className="text-sm text-muted-foreground mb-1">Your VID:</p>
+                  <p className="font-mono text-primary text-lg break-all">{generatedVID}</p>
                 </div>
                 <Button
                   variant="outline"
                   size="sm"
                   onClick={copyCID}
-                  className="ml-4 border-[#3FB8AF] text-[#3FB8AF] hover:bg-[#3FB8AF] hover:text-[#0D1117] transition-all duration-200"
+                  className="ml-4 border-primary text-primary hover:bg-primary hover:text-background transition-all duration-200"
                 >
                   <Copy className="h-4 w-4" />
                 </Button>
               </div>
             </div>
-            <p className="text-sm text-gray-400 mb-10 leading-relaxed">
+            <p className="text-sm text-muted-foreground mb-10 leading-relaxed">
               Save this CID for future reference. It's your unique identifier for tracking this submission and proving authenticity.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/feed">
-                <Button className="bg-[#3FB8AF] hover:bg-[#2FA39E] text-[#0D1117] font-medium px-8 py-3 rounded-lg transition-all duration-200 hover:shadow-lg">
+                <Button className="bg-primary hover:bg-primary/80 text-background font-medium px-8 py-3 rounded-lg transition-all duration-200 hover:shadow-lg">
                   <span>View Feed</span>
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
               </Link>
               <Button
                 variant="outline"
-                className="border-gray-600 text-gray-400 hover:bg-gray-800 hover:text-white font-medium px-8 py-3 rounded-lg transition-all duration-200"
+                className="border-border text-muted-foreground hover:bg-muted hover:text-foreground font-medium px-8 py-3 rounded-lg transition-all duration-200"
                 onClick={() => {
                   setSubmitted(false);
                   setGeneratedVID('')
@@ -174,22 +174,22 @@ const Submit = () => {
 
   if (!connected) {
     return (
-      <div className="min-h-screen bg-[#0D1117] flex flex-col justify-center">
+  <div className="min-h-screen bg-background flex flex-col justify-center">
         <div className="max-w-lg mx-auto w-full px-4 pt-8">
           <StepIndicator steps={steps} current={0} />
-          <Card className="bg-[#161B22] border-gray-700 mt-8">
+          <Card className="bg-card border-border mt-8">
             <CardContent className="p-12 text-center">
-              <div className="p-4 bg-[#3FB8AF]/10 rounded-full w-fit mx-auto mb-8">
-                <FileText className="h-16 w-16 text-[#3FB8AF]" />
+              <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-8">
+                <FileText className="h-16 w-16 text-primary" />
               </div>
-              <h2 className="text-2xl font-bold mb-6 text-white">Connect Your Wallet</h2>
-              <p className="text-gray-400 mb-8">
+              <h2 className="text-2xl font-bold mb-6 text-foreground">Connect Your Wallet</h2>
+              <p className="text-muted-foreground mb-8">
                 To submit a whistleblow, you need to connect your Petra wallet first. This ensures your submission is securely recorded on the Aptos blockchain.
               </p>
               <Button
                 onClick={() => connect("Petra")}
                 disabled={isLoading}
-                className="bg-[#3FB8AF] hover:bg-[#2FA39E] text-[#0D1117] font-medium px-8 py-3 rounded-lg transition-all duration-200"
+                className="bg-primary hover:bg-primary/80 text-background font-medium px-8 py-3 rounded-lg transition-all duration-200"
               >
                 {isLoading ? "Connecting..." : "Connect Petra Wallet"}
               </Button>
@@ -202,15 +202,13 @@ const Submit = () => {
 
   if (!emailVerified) {
     return (
-      <div className="min-h-screen bg-[#0D1117] flex flex-col justify-center">
+      <div className="min-h-screen bg-background flex flex-col justify-center">
         <div className="max-w-lg mx-auto w-full px-4 pt-8">
           <StepIndicator steps={steps} current={1} />
           <EMLUploadSection
             onVerified={(e: EMLPropReturn) => {
               console.log({ e });
-            
               setDomain(e.domain)
-
               setEmailVerified(true);
               toast({
                 title: "Email Verified",
@@ -224,18 +222,18 @@ const Submit = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#0D1117] text-white font-['Inter',sans-serif]">
+    <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif]">
       {/* Header */}
-      <header className="border-b border-gray-700 bg-[#0D1117] sticky top-0 z-50">
+      <header className="border-b border-border bg-background sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-3">
-            <div className="p-2 bg-[#3FB8AF]/10 rounded-lg">
-              <FileText className="h-6 w-6 text-[#3FB8AF]" />
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <FileText className="h-6 w-6 text-primary" />
             </div>
             <span className="text-xl font-semibold tracking-tight">Whistle Protect</span>
           </Link>
           <Link to="/">
-            <Button variant="outline" className="border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white font-medium px-6 py-2 rounded-lg transition-all duration-200">
+            <Button variant="outline" className="border-border text-muted-foreground hover:bg-muted hover:text-foreground font-medium px-6 py-2 rounded-lg transition-all duration-200">
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Home
             </Button>
@@ -247,14 +245,14 @@ const Submit = () => {
         <StepIndicator steps={steps} current={2} />
 
         {/* Success Message */}
-        <div className="bg-green-400/10 border border-green-400/30 rounded-xl p-6 mb-6 animate-fade-in">
+        <div className="bg-green-100/30 border border-green-400/30 rounded-xl p-6 mb-6 animate-fade-in">
           <div className="flex gap-4 items-center">
             <CheckCircle className="h-6 w-6 text-green-400 flex-shrink-0" />
             <div>
-              <h3 className="font-semibold text-green-300 mb-1 text-lg">
+              <h3 className="font-semibold text-green-700 mb-1 text-lg">
                 Email Verified Successfully
               </h3>
-              <p className="text-gray-200 leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 You can now submit your whistleblow. Your identity remains anonymous throughout this process.
               </p>
             </div>
@@ -262,11 +260,11 @@ const Submit = () => {
         </div>
 
         {/* Form */}
-        <Card className="bg-[#161B22] border-gray-700 mb-8">
+        <Card className="bg-card border-border mb-8">
           <CardHeader>
-            <CardTitle className="flex items-center space-x-3 text-2xl text-white">
-              <div className="p-2 bg-[#3FB8AF]/10 rounded-lg">
-                <Lock className="h-6 w-6 text-[#3FB8AF]" />
+            <CardTitle className="flex items-center space-x-3 text-2xl text-foreground">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <Lock className="h-6 w-6 text-primary" />
               </div>
               <span>Submit Whistleblow</span>
             </CardTitle>
@@ -275,27 +273,27 @@ const Submit = () => {
             <form onSubmit={handleSubmit} className="space-y-8">
               {/* Recipients */}
               <div className="space-y-4">
-                <Label className="text-lg font-medium text-white">Who should see this?</Label>
+                <Label className="text-lg font-medium text-foreground">Who should see this?</Label>
                 <div className="grid gap-4">
                   {verifiedGroups.map(group => (
                     <div
                       key={group.id}
                       className={`p-4 rounded-lg border transition-all duration-200 group flex items-center relative ${formData.targetGroup === group.id
-                          ? "border-[#3FB8AF] bg-[#3FB8AF]/10"
-                          : "border-gray-700 hover:border-gray-600"
+                          ? "border-primary bg-primary/10"
+                          : "border-border hover:border-muted"
                         } ${group.comingSoon ? "opacity-60 cursor-not-allowed" : "cursor-pointer hover:scale-[1.02]"}`}
                       onClick={() => !group.comingSoon && setFormData({ ...formData, targetGroup: group.id })}
                     >
                       <div className="flex items-center space-x-3">
-                        <group.icon className="h-5 w-5 text-[#3FB8AF]" />
+                        <group.icon className="h-5 w-5 text-primary" />
                         <div>
-                          <div className="font-medium text-white">{group.name}</div>
-                          <div className="text-sm text-gray-300">{group.description}</div>
+                          <div className="font-medium text-foreground">{group.name}</div>
+                          <div className="text-sm text-muted-foreground">{group.description}</div>
                         </div>
                       </div>
                       {group.comingSoon && (
                         <span className="absolute right-4 top-1/2 transform -translate-y-1/2">
-                          <Badge className="bg-yellow-500/15 text-yellow-400 border-yellow-500/20 text-xs px-2 py-1 font-medium rounded-full">
+                          <Badge className="bg-yellow-100/60 text-yellow-700 border-yellow-300 text-xs px-2 py-1 font-medium rounded-full">
                             Coming Soon
                           </Badge>
                         </span>
@@ -307,15 +305,15 @@ const Submit = () => {
 
               {/* Category */}
               <div className="space-y-3">
-                <Label className="text-lg font-medium text-white">Category</Label>
+                <Label className="text-lg font-medium text-foreground">Category</Label>
                 <div className="flex flex-wrap gap-3">
                   {categories.map(category => (
                     <Badge
                       key={category}
                       variant={formData.category === category ? "default" : "outline"}
                       className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all duration-200 hover:scale-105 ${formData.category === category
-                          ? "bg-[#3FB8AF] text-[#0D1117] shadow-lg"
-                          : "border-gray-600 text-gray-300 hover:bg-gray-800 hover:text-white"
+                          ? "bg-primary text-background shadow-lg"
+                          : "border-border text-muted-foreground hover:bg-muted hover:text-foreground"
                         }`}
                       onClick={() => setFormData({ ...formData, category })}
                     >
@@ -327,20 +325,20 @@ const Submit = () => {
 
               {/* Title */}
               <div className="space-y-3">
-                <Label className="text-lg font-medium text-white">Organisation Domain</Label>
+                <Label className="text-lg font-medium text-foreground">Organisation Domain</Label>
                 <Input
                   disabled
-                  className="bg-[#0D1117] border-gray-700 text-white placeholder-gray-400 h-12 rounded-lg focus:border-[#3FB8AF] focus:ring-[#3FB8AF]/20"
+                  className="bg-background border-border text-foreground placeholder-muted-foreground h-12 rounded-lg focus:border-primary focus:ring-primary/20"
                   value={domain}
                 // onChange={e => setFormData({ ...formData, title: e.target.value })}
                 />
               </div>
 
               <div className="space-y-3">
-                <Label className="text-lg font-medium text-white">Title</Label>
+                <Label className="text-lg font-medium text-foreground">Title</Label>
                 <Input
                   placeholder="Short summary of your whistleblow..."
-                  className="bg-[#0D1117] border-gray-700 text-white placeholder-gray-400 h-12 rounded-lg focus:border-[#3FB8AF] focus:ring-[#3FB8AF]/20"
+                  className="bg-background border-border text-foreground placeholder-muted-foreground h-12 rounded-lg focus:border-primary focus:ring-primary/20"
                   value={formData.title}
                   onChange={e => setFormData({ ...formData, title: e.target.value })}
                 />
@@ -348,11 +346,11 @@ const Submit = () => {
 
               {/* Description */}
               <div className="space-y-3">
-                <Label className="text-lg font-medium text-white">Details</Label>
+                <Label className="text-lg font-medium text-foreground">Details</Label>
                 <Textarea
                   placeholder="Describe your whistleblow in detail. Avoid including your identity or personal info."
                   rows={8}
-                  className="bg-[#0D1117] border-gray-700 text-white placeholder-gray-400 resize-none rounded-lg focus:border-[#3FB8AF] focus:ring-[#3FB8AF]/20"
+                  className="bg-background border-border text-foreground placeholder-muted-foreground resize-none rounded-lg focus:border-primary focus:ring-primary/20"
                   value={formData.description}
                   onChange={e => setFormData({ ...formData, description: e.target.value })}
                   required
@@ -407,11 +405,11 @@ const Submit = () => {
                 <Button
                   type="submit"
                   disabled={!formData.description || !formData.category || isSubmitting}
-                  className="w-full bg-[#3FB8AF] hover:bg-[#2FA39E] text-[#0D1117] font-semibold py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
+                  className="w-full bg-primary hover:bg-primary/80 text-background font-semibold py-4 text-lg disabled:opacity-50 disabled:cursor-not-allowed rounded-lg transition-all duration-200 hover:shadow-lg hover:scale-105"
                 >
                   {isSubmitting ? (
                     <div className="flex items-center space-x-3">
-                      <div className="w-5 h-5 border-2 border-[#0D1117] border-t-transparent rounded-full animate-spin"></div>
+                      <div className="w-5 h-5 border-2 border-background border-t-transparent rounded-full animate-spin"></div>
                       <span>Encrypting &amp; Submitting...</span>
                     </div>
                   ) : (
@@ -427,17 +425,17 @@ const Submit = () => {
         </Card>
 
         {/* Privacy & Security */}
-        <Card className="bg-[#161B22] border-gray-700">
+  <Card className="bg-card border-border">
           <CardContent className="p-8">
-            <h3 className="font-semibold mb-4 flex items-center space-x-3 text-xl text-white">
-              <div className="p-2 bg-[#3FB8AF]/10 rounded-lg">
-                <FileText className="h-5 w-5 text-[#3FB8AF]" />
+            <h3 className="font-semibold mb-4 flex items-center space-x-3 text-xl text-foreground">
+              <div className="p-2 bg-primary/10 rounded-lg">
+                <FileText className="h-5 w-5 text-primary" />
               </div>
               <span>Privacy & Security</span>
             </h3>
-            <div className="grid md:grid-cols-2 gap-8 text-gray-200">
+            <div className="grid md:grid-cols-2 gap-8 text-muted-foreground">
               <div>
-                <h4 className="font-medium text-white mb-2 flex items-center">
+                <h4 className="font-medium text-foreground mb-2 flex items-center">
                   Encryption
                   <TooltipInfo
                     text=""
@@ -449,7 +447,7 @@ const Submit = () => {
                 </p>
               </div>
               <div>
-                <h4 className="font-medium text-white mb-2 flex items-center">
+                <h4 className="font-medium text-foreground mb-2 flex items-center">
                   Anonymity{" "}
                   <TooltipInfo
                     text=""
@@ -464,7 +462,7 @@ const Submit = () => {
                 </p>
               </div>
               <div>
-                <h4 className="font-medium text-white mb-2 flex items-center">
+                <h4 className="font-medium text-foreground mb-2 flex items-center">
                   Immutability{" "}
                   <TooltipInfo
                     text=""
@@ -480,7 +478,7 @@ const Submit = () => {
                 </p>
               </div>
               <div>
-                <h4 className="font-medium text-white mb-2 flex items-center">
+                <h4 className="font-medium text-foreground mb-2 flex items-center">
                   Attestation
                   <TooltipInfo
                     text=""

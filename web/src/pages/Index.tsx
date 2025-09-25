@@ -12,20 +12,20 @@ const Index = () => {
   const { isConnected, isConnecting, address, connectWallet } = useWallet();
 
   return (
-    <div className="min-h-screen bg-[#0D1117] text-white font-['Inter',sans-serif]">
+  <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif]">
       {/* Header */}
-      <header className="border-b border-gray-700 bg-[#0D1117] backdrop-blur-sm sticky top-0 z-50">
+  <header className="border-b border-border bg-card backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="p-2 bg-[#3FB8AF]/10 rounded-lg">
-              <FileText className="h-6 w-6 text-[#3FB8AF]" />
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <FileText className="h-6 w-6 text-primary" />
             </div>
             <span className="text-xl font-semibold tracking-tight">Whistle Protect</span>
           </div>
           <nav className="flex items-center space-x-6">
             <Link 
               to="/feed" 
-              className="text-gray-300 hover:text-white transition-colors duration-200 font-medium"
+              className="text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
             >
               Feed
             </Link>
@@ -58,21 +58,21 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="container mx-auto px-6 py-10 text-center">
+  <section className="container mx-auto px-6 py-10 text-center">
         <h1 className="text-6xl md:text-7xl font-bold mb-8 leading-tight tracking-tight">
           A Safer Way to{" "}
-          <span className="text-[#3FB8AF] bg-gradient-to-r from-[#3FB8AF] to-[#2FA39E] bg-clip-text text-transparent">
+          <span className="text-primary bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
             Whistleblow
           </span>
         </h1>
-        <p className="text-xl text-gray-100 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
+        <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
           A secure platform for verifiable disclosures. No logins. No surveillance. Just proof.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-6 justify-center">
           <Button 
             size="lg" 
-            className="bg-[#3FB8AF] hover:bg-[#2FA39E] text-[#0D1117] font-semibold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
+            className="bg-primary hover:bg-primary/80 text-background font-semibold px-8 py-4 text-lg rounded-lg shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105"
             asChild
           >
             <Link to="/submit" className="flex items-center space-x-2">
@@ -83,7 +83,7 @@ const Index = () => {
           <Button 
             size="lg" 
             variant="outline" 
-            className="bg-[#F5F5F5] border-[#E5E7EB] text-[#1F2937] hover:bg-[#E5E7EB] hover:text-[#0F172A] hover:border-[#D1D5DB] px-8 py-4 text-lg rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95 active:shadow-sm"
+            className="bg-secondary border-border text-foreground hover:bg-muted hover:text-foreground hover:border-muted px-8 py-4 text-lg rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-200 transform hover:scale-105 active:scale-95 active:shadow-sm"
             asChild
           >
             <Link to="/manifesto">Learn More</Link>
@@ -92,31 +92,31 @@ const Index = () => {
 
         {/* Trust Indicators */}
         <div className="grid md:grid-cols-3 gap-8 mt-12">
-          <Card className="bg-[#161B22] border-gray-700 hover:border-[#3FB8AF]/50 transition-all duration-300 hover:transform hover:scale-105 group">
+          <Card className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:transform hover:scale-105 group">
             <CardContent className="p-8 text-center">
-              <div className="p-4 bg-[#3FB8AF]/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-[#3FB8AF]/20 transition-colors duration-300">
-                <Lock className="h-8 w-8 text-[#3FB8AF]" />
+              <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+                <Lock className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Zero-Knowledge Proofs</h3>
-              <p className="text-gray-100 leading-relaxed">Verify authenticity without revealing identity</p>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Zero-Knowledge Proofs</h3>
+              <p className="text-muted-foreground leading-relaxed">Verify authenticity without revealing identity</p>
             </CardContent>
           </Card>
-          <Card className="bg-[#161B22] border-gray-700 hover:border-[#3FB8AF]/50 transition-all duration-300 hover:transform hover:scale-105 group">
+          <Card className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:transform hover:scale-105 group">
             <CardContent className="p-8 text-center">
-              <div className="p-4 bg-[#3FB8AF]/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-[#3FB8AF]/20 transition-colors duration-300">
-                <FileText className="h-8 w-8 text-[#3FB8AF]" />
+              <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+                <FileText className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Immutable Records</h3>
-              <p className="text-gray-100 leading-relaxed">Blockchain-backed proof of disclosure timestamps</p>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Immutable Records</h3>
+              <p className="text-muted-foreground leading-relaxed">Blockchain-backed proof of disclosure timestamps</p>
             </CardContent>
           </Card>
-          <Card className="bg-[#161B22] border-gray-700 hover:border-[#3FB8AF]/50 transition-all duration-300 hover:transform hover:scale-105 group">
+          <Card className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:transform hover:scale-105 group">
             <CardContent className="p-8 text-center">
-              <div className="p-4 bg-[#3FB8AF]/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-[#3FB8AF]/20 transition-colors duration-300">
-                <Eye className="h-8 w-8 text-[#3FB8AF]" />
+              <div className="p-4 bg-primary/10 rounded-full w-fit mx-auto mb-6 group-hover:bg-primary/20 transition-colors duration-300">
+                <Eye className="h-8 w-8 text-primary" />
               </div>
-              <h3 className="text-xl font-semibold mb-3 text-white">Anonymous by Design</h3>
-              <p className="text-gray-100 leading-relaxed">No accounts, no tracking, no surveillance</p>
+              <h3 className="text-xl font-semibold mb-3 text-foreground">Anonymous by Design</h3>
+              <p className="text-muted-foreground leading-relaxed">No accounts, no tracking, no surveillance</p>
             </CardContent>
           </Card>
         </div>
@@ -125,8 +125,8 @@ const Index = () => {
       {/* Timeline Section */}
       <section className="container mx-auto px-6 py-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold mb-4 text-white">History of Whistleblows</h2>
-          <p className="text-xl text-gray-100 max-w-2xl mx-auto">
+          <h2 className="text-4xl font-bold mb-4 text-foreground">History of Whistleblows</h2>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Learn from the past. Each disclosure changed the world.
           </p>
         </div>
@@ -139,8 +139,8 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-700 bg-[#0D1117] py-12">
-        <div className="container mx-auto px-6 text-center text-gray-400">
+      <footer className="border-t border-border bg-card py-12">
+        <div className="container mx-auto px-6 text-center text-muted-foreground">
           <p className="font-medium">&copy; 2024 Whistle Protect. Built for transparency, powered by cryptography.</p>
         </div>
       </footer>

@@ -172,13 +172,13 @@ const Feed = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0D1117] text-white font-['Inter',sans-serif]">
+  <div className="min-h-screen bg-background text-foreground font-['Inter',sans-serif]">
       {/* Header */}
-      <header className="border-b border-gray-700 bg-[#0D1117] backdrop-blur-sm sticky top-0 z-50">
+  <header className="border-b border-border bg-card backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-6 py-4 flex justify-between items-center">
           <Link to="/" className="flex items-center space-x-3">
-            <div className="p-2 bg-[#3FB8AF]/10 rounded-lg">
-              <Shield className="h-6 w-6 text-[#3FB8AF]" />
+            <div className="p-2 bg-primary/10 rounded-lg">
+              <Shield className="h-6 w-6 text-primary" />
             </div>
             <span className="text-xl font-semibold tracking-tight">Whistle Protect</span>
           </Link>
@@ -190,16 +190,16 @@ const Feed = () => {
         {/* Filters */}
         <div className="flex flex-col lg:flex-row gap-6 mb-8">
           <div className="flex-1 relative">
-            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
             <Input
               placeholder="Search tips, categories, or keywords..."
-              className="pl-12 bg-[#161B22] border-gray-700 text-white placeholder-gray-500 h-12 rounded-lg font-medium"
+              className="pl-12 bg-card border-border text-foreground placeholder-muted-foreground h-12 rounded-lg font-medium"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="flex items-center space-x-4">
-            <Filter className="h-5 w-5 text-gray-400" />
+            <Filter className="h-5 w-5 text-muted-foreground" />
             <div className="flex flex-wrap gap-2">
               {categories.map((category) => (
                 <Button
@@ -207,8 +207,8 @@ const Feed = () => {
                   variant={selectedCategory === category ? "default" : "outline"}
                   size="sm"
                   className={selectedCategory === category
-                    ? "bg-[#3FB8AF] text-[#0D1117] font-medium px-4 py-2 rounded-lg"
-                    : "border-gray-600 text-gray-400 hover:bg-gray-800 hover:text-white font-medium px-4 py-2 rounded-lg transition-all duration-200"
+                    ? "bg-primary text-background font-medium px-4 py-2 rounded-lg"
+                    : "border-border text-muted-foreground hover:bg-muted hover:text-foreground font-medium px-4 py-2 rounded-lg transition-all duration-200"
                   }
                   onClick={() => setSelectedCategory(category)}
                 >
@@ -222,17 +222,17 @@ const Feed = () => {
         {/* Feed */}
         <div className="space-y-6">
           {isLoading ? (
-            <Card className="bg-[#161B22] border-gray-700">
+            <Card className="bg-card border-border">
               <CardContent className="p-16 text-center">
-                <Clock className="h-16 w-16 text-gray-500 mx-auto mb-6 animate-spin" />
-                <h3 className="text-2xl font-semibold mb-3 text-white">Loading tips...</h3>
-                <p className="text-gray-400 text-lg">Please wait while we fetch the latest tips</p>
+                <Clock className="h-16 w-16 text-muted-foreground mx-auto mb-6 animate-spin" />
+                <h3 className="text-2xl font-semibold mb-3 text-foreground">Loading tips...</h3>
+                <p className="text-muted-foreground text-lg">Please wait while we fetch the latest tips</p>
               </CardContent>
             </Card>
           ) : filteredTips.length > 0 ? (
             <>
               {filteredTips.map((tip) => (
-                <Card key={tip.id} className="bg-[#161B22] border-gray-700 hover:border-[#3FB8AF]/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-xl group">
+                <Card key={tip.id} className="bg-card border-border hover:border-primary/50 transition-all duration-300 hover:transform hover:scale-[1.02] hover:shadow-xl group">
                   <CardHeader className="pb-4">
                     <div className="flex items-start justify-between">
                       <div className="flex items-center space-x-3 flex-wrap gap-2">
@@ -242,16 +242,16 @@ const Feed = () => {
                           {getStatusIcon(tip.status)}
                           <span className="capitalize">{tip.status}</span>
                         </Badge>
-                        <Badge variant="outline" className="border-gray-600 text-gray-400 px-3 py-1 rounded-full">
+                        <Badge variant="outline" className="border-border text-muted-foreground px-3 py-1 rounded-full">
                           {tip.category}
                         </Badge>
                         <Badge variant="secondary" className="px-3 py-1 rounded-full">
                           {tip.domain}
                         </Badge>
-                        <span className="text-sm text-gray-500 font-medium">{tip.date.toDateString()}</span>
+                        <span className="text-sm text-muted-foreground font-medium">{tip.date.toDateString()}</span>
                       </div>
                       <div className="flex items-center space-x-2">
-                        <span className="text-sm text-gray-400 font-medium">{tip.attestations} attestations</span>
+                        <span className="text-sm text-muted-foreground font-medium">{tip.attestations} attestations</span>
                       </div>
                     </div>
                   </CardHeader>
@@ -272,16 +272,16 @@ const Feed = () => {
                       </div> */}
 
                       <div>
-                        <CardTitle className="text-white text-lg font-semibold">{tip.title}</CardTitle>
+                        <CardTitle className="text-foreground text-lg font-semibold">{tip.title}</CardTitle>
                       </div>
-                      <p className="text-gray-300 leading-relaxed text-md">{tip.content}</p>
-                      <div className="flex items-center justify-between pt-4 border-t border-gray-800">
+                      <p className="text-muted-foreground leading-relaxed text-md">{tip.content}</p>
+                      <div className="flex items-center justify-between pt-4 border-t border-border">
                         <div className="flex space-x-3">
                           <Button
                             disabled
                             variant="outline"
                             size="sm"
-                            className="border-[#3FB8AF] text-[#3FB8AF] hover:bg-[#3FB8AF] hover:text-[#0D1117] transition-all duration-200 px-6 py-2 rounded-lg font-medium"
+                            className="border-primary text-primary hover:bg-primary hover:text-background transition-all duration-200 px-6 py-2 rounded-lg font-medium"
                           >
                             Attest (Coming soon)
                           </Button>
@@ -307,11 +307,11 @@ const Feed = () => {
               )}
             </>
           ) : (
-            <Card className="bg-[#161B22] border-gray-700 border-dashed">
+            <Card className="bg-card border-border border-dashed">
               <CardContent className="p-16 text-center">
-                <Search className="h-16 w-16 text-gray-500 mx-auto mb-6" />
-                <h3 className="text-2xl font-semibold mb-3 text-white">No tips found</h3>
-                <p className="text-gray-400 text-lg">Try adjusting your search terms or category filters</p>
+                <Search className="h-16 w-16 text-muted-foreground mx-auto mb-6" />
+                <h3 className="text-2xl font-semibold mb-3 text-foreground">No tips found</h3>
+                <p className="text-muted-foreground text-lg">Try adjusting your search terms or category filters</p>
               </CardContent>
             </Card>
           )}
